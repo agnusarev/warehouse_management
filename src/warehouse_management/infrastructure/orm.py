@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, Float, Table, ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy import Column, Float, ForeignKey, Integer, String, Table
+from sqlalchemy.orm import DeclarativeBase, relationship
+
 
 class Base(DeclarativeBase):
     pass

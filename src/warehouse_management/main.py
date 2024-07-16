@@ -28,7 +28,7 @@ def main() -> None:
         )
         uow.commit()
         print(f"create product: {new_product}")
-        # todo add some actions
+        # TODO add some actions
 
 
 if __name__ == "__main__":

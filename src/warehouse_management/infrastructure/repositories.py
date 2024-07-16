@@ -1,8 +1,9 @@
-from sqlalchemy.orm import Session
 from typing import List
+
 from domain.models import Order, Product
-from domain.repositories import ProductRepository, OrderRepository
-from orm import ProductORM, OrderORM
+from domain.repositories import OrderRepository, ProductRepository
+from orm import OrderORM, ProductORM
+from sqlalchemy.orm import Session
 
 
 class SqlAlchemyProductRepository(ProductRepository):

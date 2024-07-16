@@ -8,7 +8,6 @@ packages = [{include = "warehouse_management", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-tarantool = "^1.2.0"
 sqlalchemy = "^2.0.31"
 
 

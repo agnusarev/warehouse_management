@@ -20,14 +20,14 @@ class SqlAlchemyProductRepository(ProductRepository):
         return Product(
             id=product_orm.id,
             name=product_orm.name,
-            quntity=product_orm.quntity,
+            quntity=product_orm.quantity,
             price=product_orm.price,
         )
 
     def list(self) -> List[Product]:
         products_orm = self.session.query(ProductORM).all()
         return [
-            Product(id=p.id, name=p.name, quntity=p.quntity, price=p.price)
+            Product(id=p.id, name=p.name, quntity=p.quantity, price=p.price)
             for p in products_orm
         ]
 
@@ -47,7 +47,7 @@ class SqlAlchemyOrderRepository(OrderRepository):
     def get(self, order_id: int) -> Order:
         order_orm = self.session.query(OrderORM).filter_by(id=order_id).one()
         products = [
-            Product(id=p.id, name=p.name, quntity=p.quntity, price=p.price)
+            Product(id=p.id, name=p.name, quntity=p.quantity, price=p.price)
             for p in order_orm.products
         ]
         return Order(id=order_orm.id, products=products)
@@ -57,7 +57,7 @@ class SqlAlchemyOrderRepository(OrderRepository):
         orders = []
         for order_orm in orders_orm:
             products = [
-                Product(id=p.id, name=p.name, quntity=p.quntity, price=p.price)
+                Product(id=p.id, name=p.name, quantity=p.quantity, price=p.price)
                 for p in order_orm.products
             ]
             orders.append(Order(id=order_orm.id, products=products))

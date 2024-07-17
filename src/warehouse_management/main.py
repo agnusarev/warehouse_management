@@ -6,8 +6,9 @@ from infrastructure.repositories import (
 from infrastructure.unit_of_work import SqlAlchemyUnitOfWork
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from infrastructure.orm import Base
 
-DATABASE_URL = "sqllite://warehouse.db"
+DATABASE_URL = r"sqlite:///warehouse.db"
 
 engine = create_engine(DATABASE_URL)
 SessionFactory = sessionmaker(bind=engine)
@@ -19,10 +20,8 @@ def main() -> None:
     product_repo = SqlAlchemyProductRepository(session)
     order_repo = SqlAlchemyOrderRepository(session)
 
-    uow = SqlAlchemyUnitOfWork(session)
-
     warehouse_service = WarehouseService(product_repo, order_repo)
-    with uow:
+    with SqlAlchemyUnitOfWork(session) as uow:
         new_product = warehouse_service.create_product(
             name="test1", quantity=1, price=100
         )

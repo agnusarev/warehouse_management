@@ -1,6 +1,6 @@
 from typing import List
 
-from models import Order, Product
+from .models import Order, Product
 
 from .repositories import OrderRepository, ProductRepository
 

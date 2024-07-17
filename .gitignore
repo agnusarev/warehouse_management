@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+# db
+
+src/warehouse_management/warehouse.db
+
 # Distribution / packaging
 .Python
 build/

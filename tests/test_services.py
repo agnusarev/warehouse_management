@@ -7,7 +7,7 @@ from warehouse_management.infrastructure.repositories import (
 )
 from warehouse_management.infrastructure.unit_of_work import SqlAlchemyUnitOfWork
 
-
+# TODO подумать над тестом
 def test_warehouse_servise(session: Session) -> None:
     product_repo = SqlAlchemyProductRepository(session)
     order_repo = SqlAlchemyOrderRepository(session)

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class UnitOfWork(ABC):
     @abstractmethod
-    def __enter__(self) -> None:
+    def __enter__(self) -> "UnitOfWork":
         pass
 
     @abstractmethod

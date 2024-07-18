@@ -1,4 +1,4 @@
-from domain.unit_of_work import UnitOfWork
+from warehouse_management.domain.unit_of_work import UnitOfWork
 from sqlalchemy.orm import Session
 
 

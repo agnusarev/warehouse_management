@@ -1,7 +1,7 @@
 from typing import List
 
-from domain.models import Order, Product
-from domain.repositories import OrderRepository, ProductRepository
+from warehouse_management.domain.models import Order, Product
+from warehouse_management.domain.repositories import OrderRepository, ProductRepository
 from sqlalchemy.orm import Session
 
 from .orm import OrderORM, ProductORM

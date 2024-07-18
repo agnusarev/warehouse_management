@@ -13,6 +13,6 @@ linting:
 mypy:
 	poetry run mypy src
 
-.PHONY: run_server
-run_server:
-	poetry run python src/api_scoring/api.py
+.PHONY: warehouse_management
+warehouse_management:
+	poetry run python src/warehouse_management/main.py

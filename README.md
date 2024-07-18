@@ -1,6 +1,6 @@
 # api_scoring
 
-Script run http server and validate requests. Response contains score or list of interests depending on request.
+Project demonstrates clean architecture.
 
 ## Installation
 
@@ -11,8 +11,8 @@ poetry install
 ## Runs
 
 ````bash
-make run_server
-poetry run python src/api_scoring/api.py
+make warehouse_management
+poetry run python src/warehouse_management/main.py
 ````
 
 ## Tests

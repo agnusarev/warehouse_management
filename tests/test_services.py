@@ -15,7 +15,7 @@ def test_warehouse_servise(session: Session) -> None:
     warehouse_service = WarehouseService(product_repo, order_repo)
     with SqlAlchemyUnitOfWork(session) as uow:
         new_product = warehouse_service.create_product(
-            name="test1", quantity=1, price=100
+            name="test1", quantity=1, price=100, category=10,
         )
         print(f"create product: {new_product}")
         uow.commit()

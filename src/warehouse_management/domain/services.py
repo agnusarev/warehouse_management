@@ -9,8 +9,8 @@ class WarehouseService:
         self.product_repo = product_repo
         self.order_repo = order_repo
 
-    def create_product(self, name: str, quantity: int, price: float) -> Product:
-        product = Product(id=0, name=name, quantity=quantity, price=price)
+    def create_product(self, name: str, quantity: int, price: float, category: int) -> Product:
+        product = Product(id=0, name=name, quantity=quantity, price=price, category=category)
         self.product_repo.add(product)
         return product
 

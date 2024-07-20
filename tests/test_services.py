@@ -1,16 +1,167 @@
 from sqlalchemy.orm import Session
 
 from warehouse_management.domain.services import WarehouseService
-from warehouse_management.infrastructure.repositories import (
-    # SqlAlchemyOrderRepository,
-    SqlAlchemyProductRepository,
+from warehouse_management.domain.models import (
+    Category,
+    Customer,
+    Order,
+    Product,
+    Role,
+    Staff,
 )
+from warehouse_management.infrastructure.repositories import (
+    SqlAlchemyOrderRepository,
+    SqlAlchemyProductRepository,
+    SqlAlchemyRoleRepository,
+    SqlAlchemyCustomerRepository,
+    SqlAlchemyCategoryRepository,
+    SqlAlchemyStaffRepository,
+)
+from warehouse_management.infrastructure.unit_of_work import SqlAlchemyUnitOfWork
 
-def test_services(session: Session) -> None:
+
+def test_services_create_product(session: Session) -> None:
     product_repo = SqlAlchemyProductRepository(session)
 
-    warehouse_service = WarehouseService(product_repo)
+    warehouse_service = WarehouseService(product_repo=product_repo)
     new_product = warehouse_service.create_product(
-        name="test1", quantity=1, price=100, category=10,
+        name="test1",
+        quantity=1,
+        price=100,
+        category=10,
     )
-    assert new_product
+    assert isinstance(new_product, Product)
+
+
+def test_services_create_order(session: Session) -> None:
+    product_repo = SqlAlchemyProductRepository(session)
+    order_repo = SqlAlchemyOrderRepository(session)
+
+    warehouse_service = WarehouseService(
+        product_repo=product_repo, order_repo=order_repo
+    )
+    with SqlAlchemyUnitOfWork(session) as uow:
+        _ = warehouse_service.create_product(
+            name="test1",
+            quantity=1,
+            price=100,
+            category=10,
+        )
+        uow.commit()
+
+    _product = product_repo.get(2)
+
+    order = warehouse_service.create_order([_product])
+    assert isinstance(order, Order)
+
+
+def test_services_create_category(session: Session) -> None:
+    product_repo = SqlAlchemyProductRepository(session)
+    category_repo = SqlAlchemyCategoryRepository(session)
+    warehouse_service = WarehouseService(
+        product_repo=product_repo, category_repo=category_repo
+    )
+
+    with SqlAlchemyUnitOfWork(session) as uow:
+        _ = warehouse_service.create_product(
+            name="test1",
+            quantity=1,
+            price=100,
+            category=10,
+        )
+        uow.commit()
+
+    _product = product_repo.get(3)
+
+    category = warehouse_service.create_category(
+        name="clothes", description="some clothes", products=[_product]
+    )
+    assert isinstance(category, Category)
+
+
+def test_services_create_customer(session: Session) -> None:
+    customer_repo = SqlAlchemyCustomerRepository(session)
+    warehouse_service = WarehouseService(customer_repo=customer_repo)
+
+    customer = warehouse_service.create_customer(
+        first_name="Alexander",
+        last_name="Gnusarev",
+        address="baker street 221b",
+        phone="99999",
+        email="alex@gmail.com",
+        staff_id=1,
+    )
+
+    assert isinstance(customer, Customer)
+
+
+def test_services_create_role(session: Session) -> None:
+    role_repo = SqlAlchemyRoleRepository(session)
+    staff_repo = SqlAlchemyStaffRepository(session)
+    customer_repo = SqlAlchemyCustomerRepository(session)
+    warehouse_service = WarehouseService(
+        staff_repo=staff_repo, role_repo=role_repo, customer_repo=customer_repo
+    )
+
+    with SqlAlchemyUnitOfWork(session) as uow:
+        _ = warehouse_service.create_customer(
+            first_name="Alexander",
+            last_name="Gnusarev",
+            address="baker street 221b",
+            phone="99999",
+            email="alex@gmail.com",
+            staff_id=1,
+        )
+        uow.commit()
+        _customer = customer_repo.get(2)
+        _ = warehouse_service.create_staff(
+            first_name="Alexander",
+            last_name="Gnusarev",
+            address="baker street 221b",
+            email="alex@gmail.com",
+            phone="8888",
+            user_name="alex.gnusarev",
+            role_id=1,
+            customers=[_customer],
+        )
+        uow.commit()
+
+    _staff = staff_repo.get(1)
+
+    role = warehouse_service.create_role(
+        name="Super role", description="This role can do everything.", staffs=[_staff]
+    )
+    assert isinstance(role, Role)
+
+
+def test_services_create_staff(session: Session) -> None:
+    staff_repo = SqlAlchemyStaffRepository(session)
+
+    customer_repo = SqlAlchemyCustomerRepository(session)
+    warehouse_service = WarehouseService(
+        staff_repo=staff_repo, customer_repo=customer_repo
+    )
+
+    with SqlAlchemyUnitOfWork(session) as uow:
+        _ = warehouse_service.create_customer(
+            first_name="Alexander",
+            last_name="Gnusarev",
+            address="baker street 221b",
+            phone="99999",
+            email="alex@gmail.com",
+            staff_id=1,
+        )
+        uow.commit()
+    _customer = customer_repo.get(3)
+
+    staff = warehouse_service.create_staff(
+        first_name="Alex",
+        last_name="Gnusarev",
+        address="baker street 221b",
+        phone="7777",
+        email="gnusarev@mail.com",
+        user_name="alex.gnusarev",
+        role_id=1,
+        customers=[_customer],
+    )
+    assert isinstance(staff, Staff)

@@ -28,7 +28,10 @@ class SqlAlchemyProductRepository(ProductRepository):
 
     def add(self, product: Product) -> None:
         product_orm = ProductORM(
-            name=product.name, quantity=product.quantity, price=product.price
+            name=product.name,
+            quantity=product.quantity,
+            price=product.price,
+            category=product.category,
         )
         self.session.add(product_orm)
 
@@ -155,6 +158,7 @@ class SqlAlchemyCustomerRepository(CustomerRepository):
             address=customer.address,
             phone=customer.phone,
             email=customer.email,
+            staff_id=customer.staff_id,
         )
         self.session.add(customer_orm)
 

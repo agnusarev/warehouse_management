@@ -5,7 +5,7 @@ from warehouse_management.infrastructure.unit_of_work import SqlAlchemyUnitOfWor
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = r"sqlite:///warehouse.db"
+DATABASE_URL = r"sqlite://warehouse.db"
 
 engine = create_engine(DATABASE_URL)
 SessionFactory = sessionmaker(bind=engine)
@@ -21,6 +21,8 @@ def main() -> None:
     with SqlAlchemyUnitOfWork(session) as uow:
         new_product = warehouse_service.create_product(name="test1", quantity=1, price=100, category=10)
         uow.commit()
+        _product = product_repo.get(4)
+        print(_product)
         print(f"create product: {new_product}")
         # TODO add some actions
 

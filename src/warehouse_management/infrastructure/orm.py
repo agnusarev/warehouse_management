@@ -8,7 +8,7 @@ class Base(DeclarativeBase):
 
 class ProductORM(Base):
     __tablename__ = "products"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     quantity = Column(Integer)
     price = Column(Float)
@@ -25,7 +25,7 @@ order_product_assocoations = Table(
 
 class OrderORM(Base):
     __tablename__ = "orders"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     products = relationship("ProductORM", secondary=order_product_assocoations)
 
 
@@ -39,7 +39,7 @@ product_category_assocoations = Table(
 
 class CategoryORM(Base):
     __tablename__ = "category"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     description = Column(String)
     products = relationship("ProductORM", secondary=product_category_assocoations)
@@ -55,7 +55,7 @@ role_staff_assocoations = Table(
 
 class RoleORM(Base):
     __tablename__ = "role"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     description = Column(String)
     staffs = relationship("StaffORM", secondary=role_staff_assocoations)
@@ -63,7 +63,7 @@ class RoleORM(Base):
 
 class CustomerORM(Base):
     __tablename__ = "customer"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String)
     last_name = Column(String)
     address = Column(String)
@@ -82,7 +82,7 @@ staff_customer_assocoations = Table(
 
 class StaffORM(Base):
     __tablename__ = "staff"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String)
     last_name = Column(String)
     address = Column(String)

@@ -4,19 +4,19 @@ from typing import List
 
 @dataclass
 class Product:
-    id: int
     name: str
     quantity: int
     price: float
     category: int
+    id: int = 0
 
 
 @dataclass
 class Category:
-    id: int
     name: str
     description: str
     products: List[Product] = field(default_factory=list)
+    id: int = 0
 
     def add_product(self, product: Product) -> None:
         self.products.append(product)
@@ -24,7 +24,7 @@ class Category:
 
 @dataclass
 class Order:
-    id: int
+    id: int = 0
     products: List[Product] = field(default_factory=list)
 
     def add_product(self, product: Product) -> None:
@@ -33,18 +33,17 @@ class Order:
 
 @dataclass
 class Customer:
-    id: int
     first_name: str
     last_name: str
     address: str
     phone: str
     email: str
     staff_id: int
+    id: int = 0
 
 
 @dataclass
 class Staff:
-    id: int
     first_name: str
     last_name: str
     address: str
@@ -52,12 +51,13 @@ class Staff:
     email: str
     user_name: str
     role_id: int
+    id: int = 0
     customers: List[Customer] = field(default_factory=list)
 
 
 @dataclass
 class Role:
-    id: int
     name: str
     description: str
+    id: int = 0
     staffs: List[Staff] = field(default_factory=list)

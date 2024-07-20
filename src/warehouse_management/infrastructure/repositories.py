@@ -105,7 +105,7 @@ class SqlAlchemyCategoryRepository(CategoryRepository):
         self.session = session
 
     def add(self, category: Category) -> None:
-        category_orm = CategoryORM()
+        category_orm = CategoryORM(name=category.name, description=category.description)
         category_orm.products = [
             self.session.query(ProductORM).filter_by(id=p.id).one()
             for p in category.products
@@ -191,7 +191,7 @@ class SqlAlchemyRoleRepository(RoleRepository):
         self.session = session
 
     def add(self, role: Role) -> None:
-        role_orm = RoleORM()
+        role_orm = RoleORM(name=role.name, description=role.description)
         role_orm.staffs = [
             self.session.query(StaffORM).filter_by(id=p.id).one() for p in role.staffs
         ]
@@ -276,7 +276,15 @@ class SqlAlchemyStaffRepository(StaffRepository):
         self.session = session
 
     def add(self, staff: Staff) -> None:
-        staff_orm = StaffORM()
+        staff_orm = StaffORM(
+            first_name=staff.first_name,
+            last_name=staff.last_name,
+            address=staff.address,
+            phone=staff.phone,
+            email=staff.email,
+            user_name=staff.user_name,
+            role_id=staff.role_id,
+        )
         staff_orm.customers = [
             self.session.query(CustomerORM).filter_by(id=p.id).one()
             for p in staff.customers

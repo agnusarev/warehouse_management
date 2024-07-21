@@ -101,3 +101,21 @@ class WarehouseService:
         if self.customer_repo:
             self.customer_repo.add(customer)
         return customer
+
+    def get_product(self, product_id: int) -> Product:
+        return self.product_repo.get(product_id)  # type: ignore
+
+    def get_order(self, order_id: int) -> Order:
+        return self.order_repo.get(order_id)  # type: ignore
+
+    def get_category(self, category_id: int) -> Category:
+        return self.category_repo.get(category_id)  # type: ignore
+
+    def get_role(self, role_id: int) -> Role:
+        return self.role_repo.get(role_id)  # type: ignore
+
+    def get_customer(self, customer_id: int) -> Customer:
+        return self.customer_repo.get(customer_id)  # type: ignore
+
+    def get_staff(self, staff_id: int) -> Staff:
+        return self.staff_repo.get(staff_id)  # type: ignore

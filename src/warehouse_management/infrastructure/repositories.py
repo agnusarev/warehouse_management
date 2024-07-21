@@ -127,7 +127,12 @@ class SqlAlchemyCategoryRepository(CategoryRepository):
             )
             for p in category_orm.products
         ]
-        return Category(id=int(category_orm.id), products=products)
+        return Category(
+            id=int(category_orm.id),
+            products=products,
+            name=category_orm.name,
+            description=category_orm.description,
+        )
 
     def list(self) -> List[Category]:
         categories_orm = self.session.query(CategoryORM).all()

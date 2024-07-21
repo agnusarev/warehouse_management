@@ -165,3 +165,45 @@ def test_services_create_staff(session: Session) -> None:
         customers=[_customer],
     )
     assert isinstance(staff, Staff)
+
+
+def test_get_product(session: Session) -> None:
+    product_repo = SqlAlchemyProductRepository(session)
+    warehouse_service = WarehouseService(product_repo=product_repo)
+    _product = warehouse_service.get_product(1)
+    assert isinstance(_product, Product)
+
+
+def test_get_order(session: Session) -> None:
+    order_repo = SqlAlchemyOrderRepository(session)
+    warehouse_service = WarehouseService(order_repo=order_repo)
+    _order = warehouse_service.get_order(1)
+    assert isinstance(_order, Order)
+
+
+def test_get_category(session: Session) -> None:
+    category_repo = SqlAlchemyCategoryRepository(session)
+    warehouse_service = WarehouseService(category_repo=category_repo)
+    _category = warehouse_service.get_category(1)
+    assert isinstance(_category, Category)
+
+
+def test_get_role(session: Session) -> None:
+    role_repo = SqlAlchemyRoleRepository(session)
+    warehouse_service = WarehouseService(role_repo=role_repo)
+    _role = warehouse_service.get_role(1)
+    assert isinstance(_role, Role)
+
+
+def test_get_customer(session: Session) -> None:
+    customer_repo = SqlAlchemyCustomerRepository(session)
+    warehouse_service = WarehouseService(customer_repo=customer_repo)
+    _customer = warehouse_service.get_customer(1)
+    assert isinstance(_customer, Customer)
+
+
+def test_get_staff(session: Session) -> None:
+    staff_repo = SqlAlchemyStaffRepository(session)
+    warehouse_service = WarehouseService(staff_repo=staff_repo)
+    _staff = warehouse_service.get_staff(1)
+    assert isinstance(_staff, Staff)
